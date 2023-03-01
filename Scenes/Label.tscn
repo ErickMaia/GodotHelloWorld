@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="Label" type="Label"]
+margin_left = 450.0
+margin_top = 320.0
+margin_right = 534.0
+margin_bottom = 334.0
+text = "Hello, World!"
