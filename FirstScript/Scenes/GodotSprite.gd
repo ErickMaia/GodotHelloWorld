@@ -1,31 +1,25 @@
 extends Sprite
 
-
-# Declare member variables here. Examples:
 var speed = 400
 var angular_speed = PI
-var growing_speed = 0.5
 
+signal mudar_texto(texto)
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var timer = get_node("Timer")
+	timer.connect("timeout", self, "_on_Timer_timeout")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var direction = 0
-	if Input.is_action_pressed("ui_left"):
-		direction = -1
-	if Input.is_action_pressed("ui_right"):
-		direction = 1
-		
-
-	rotation += angular_speed * direction * delta
-
-	var velocity = Vector2.ZERO
-	
-	if Input.is_action_pressed("ui_up"):
-		velocity = Vector2.UP.rotated(rotation) * speed
-
+	rotation += angular_speed * delta
+	var velocity = Vector2.UP.rotated(rotation) * speed
 	position += velocity * delta
+	
+	if Input.is_action_pressed("ui_select"): 
+		self.emit_signal("mudar_texto", "lorem ipsum dolor sit amet")
+
+func _on_Button_pressed():
+	set_process(not is_processing())
+
+
+func _on_Timer_timeout():
+	visible = not visible
